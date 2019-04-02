@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BookModel, BookManageService } from '../book-manage.service';
 
 @Component({
   selector: 'app-list',
@@ -6,10 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-
-  constructor() { }
+  books: BookModel[] = [];
+  constructor(
+    private bookSvc: BookManageService
+  ) { }
 
   ngOnInit() {
+    this.loadData();
+  }
+
+  async loadData() {
+    this.books = await this.bookSvc.query();
   }
 
 }
