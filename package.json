@@ -4,7 +4,9 @@
   "scripts": {
     "start": "npm run client & npm run server",
     "client": "ng serve",
-    "server": "node server/bin/www"
+    "server": "node server/bin/www",
+    "server-dev": "nodemon server/bin/www"
+
   },
   "private": true,
   "dependencies": {
