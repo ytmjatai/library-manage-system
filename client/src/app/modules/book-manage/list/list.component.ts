@@ -20,4 +20,8 @@ export class ListComponent implements OnInit {
     this.books = await this.bookSvc.query();
   }
 
+  public async delete(id: string) {
+    await this.bookSvc.delete(id);
+  }
+
 }

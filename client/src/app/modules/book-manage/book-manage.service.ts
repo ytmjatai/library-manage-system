@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -53,9 +53,10 @@ export class BookManageService {
   }
 
   async delete(id: string) {
-    const url = environment + '/books/' + id;
+    const url = environment.apiBaseUrl + '/books';
+    const p = new HttpParams().set('id', `${id}`)
     try {
-      await this.http.delete(url).toPromise();
+      await this.http.delete(url, { params: p }).toPromise();
     } catch (error) {
       console.error(error);
     }

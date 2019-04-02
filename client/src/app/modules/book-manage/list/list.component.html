@@ -22,8 +22,7 @@
           <td>{{book.desc}}</td>
           <td>
             <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-              <button type="button" class="btn btn-sm btn-outline-success">+</button>
-              <button type="button" class="btn btn-sm btn-outline-danger">-</button>
+              <button type="button" class="btn btn-sm btn-outline-danger" (click)="delete(book._id)">删除</button>
             </div>
           </td>
         </tr>
