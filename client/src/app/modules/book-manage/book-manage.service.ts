@@ -43,8 +43,8 @@ export class BookManageService {
     }
   }
 
-  async update(book: BookModel) {
-    const url = environment.apiBaseUrl + '/books';
+  async update(id: string, book: BookModel) {
+    const url = environment.apiBaseUrl + '/books/' + id;
     try {
       await this.http.put(url, book).toPromise();
     } catch (error) {

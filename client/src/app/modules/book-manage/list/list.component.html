@@ -1,8 +1,8 @@
 <div class="card">
   <div class="card-header">
     <div class="btn-group" role="group" aria-label="Basic example">
-      <a routerLink="add" class="btn btn-outline-success">新增</a>
-      <a routerLink="add" class="btn btn-outline-danger">删除</a>
+      <a routerLink="add" class="btn btn-outline-success"><i class="fas fa-plus"></i> 新增</a>
+      <a routerLink="add" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i> 删除</a>
     </div>
   </div>
   <div class="card-body">
@@ -22,7 +22,8 @@
           <td>{{book.desc}}</td>
           <td>
             <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-              <button type="button" class="btn btn-sm btn-outline-danger" (click)="delete(book._id)">删除</button>
+              <button type="button" class="btn btn-sm btn-outline-primary" (click)="edit(book._id)"><i class="fas fa-edit"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-danger" (click)="delete(book._id)"><i class="fas fa-trash-alt"></i></button>
             </div>
           </td>
         </tr>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BookManageService, BookModel } from '../book-manage.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add',
@@ -8,15 +9,27 @@ import { BookManageService, BookModel } from '../book-manage.service';
 })
 export class AddComponent implements OnInit {
   book: BookModel = {};
+  id: string;
   constructor(
-    private bookSvc: BookManageService
+    private bookSvc: BookManageService,
+    private route: ActivatedRoute
+
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get('id');
+    if (!!this.id) {
+      this.book = await this.bookSvc.queryById(this.id);
+    }
   }
 
-  public doSubmit() {
-    this.bookSvc.add(this.book);
+  public async doSubmit() {
+    if (!!this.id) {
+      await this.bookSvc.update(this.id, this.book);
+    } else {
+      await this.bookSvc.add(this.book);
+    }
+    this.book = {};
   }
 
 }
