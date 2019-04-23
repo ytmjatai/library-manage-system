@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: 'book-manage',
     loadChildren: './modules/book-manage/book-manage.module#BookManageModule'
+  },
+  {
+    path: 'category',
+    loadChildren: './modules/category/category.module#CategoryModule'
   }
 ];
 
