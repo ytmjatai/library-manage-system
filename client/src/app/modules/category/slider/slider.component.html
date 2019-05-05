@@ -1,0 +1,25 @@
+<div class="card">
+  <div class="card-header">
+    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+      <button (click)="add()" class="btn btn-outline-success"><i class="fas fa-plus"></i> 新增</button>
+      <button (click)="delete()" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i> 删除</button>
+      <button (click)="edit()" class="btn btn-outline-warning"><i class="fas fa-edit"></i> 修改</button>
+      <button (click)="reflesh()" class="btn btn-outline-primary"><i class="fas fa-redo-alt"></i> 刷新</button>
+    </div>
+  </div>
+  <div class="card-body">
+    <dx-tree-view height="100%" [dataSource]="categories$ | async" dataStructure="plain" parentId="parentId" keyExpr="_id"
+      displayExpr="name" expanded="true" [focusStateEnabled]="false" [hoverStateEnabled]="false">
+
+      <div *dxTemplate="let category of 'item'; let idx = index;">
+          <a
+            (click)="itemClick(category)"
+            [title]="category.name"
+            [ngClass]="{'text-primary': category._id === sliderSvc.category?._id}">
+            {{category.name}}
+          </a>
+      </div>
+    </dx-tree-view>
+  </div>
+  <div class="card-footer"></div>
+</div>

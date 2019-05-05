@@ -6,7 +6,9 @@ const categorySchema = new Schema(
     {
         name: String,
         parentId: String,
-        tags: Array
+        code: String,
+        order: Number,
+        isView: Number
     },
     { versionKey: null }
 );
@@ -19,7 +21,9 @@ router.get('/', function (req, res, next) {
     );
     mongoose.connection.on('error', () => {
         console.error('连接数据库出错');
-        res.send('连接数据库出错');
+        res.send({
+            msg: '连接数据库出错'
+        });
     })
     mongoose.connection.once('open', () => {
         CategoryModel.find((err, docs) => {
@@ -41,18 +45,20 @@ router.get('/:id', (req, res, next) => {
     );
     mongoose.connection.on('error', () => {
         console.error('连接数据库出错');
-        res.send('连接数据库出错');
+        res.send({
+            msg: '连接数据库出错'
+        });
     })
     mongoose.connection.once('open', () => {
-        console.log(req.query)
-        // CategoryModel.find((err, docs) => {
-        //     if (err) {
-        //         console.error(err);
-        //         res.send(err);
-        //     }
-        //     res.send(docs);
-        //     mongoose.disconnect();
-        // })
+        const id = req.params.id;
+        CategoryModel.findById(id, (err, doc) => {
+            if (err) {
+                console.error(err);
+                res.send(err);
+            }
+            res.send(doc);
+            mongoose.disconnect();
+        })
     })
 });
 
@@ -63,63 +69,58 @@ router.post('/', function (req, res, next) {
     );
     mongoose.connection.on('error', () => {
         console.error('连接数据库出错');
+        res.send({
+            msg: '连接数据库出错'
+        });
     })
     const model = Object.assign({}, req.body);
     CategoryModel.create(model, (err, doc) => {
         if (err) {
-            res.send(err)
+            res.send(err);
         }
         res.send(doc);
         mongoose.disconnect();
     });
 });
 
-router.delete('/', function (req, res, next) {
-    mongodb.MongoClient.connect(
-        'mongodb://localhost',
-        { useNewUrlParser: true },
-        async (err, client) => {
-            const id = req.query.id;
-            if (err) {
-                console.error(err);
-                return;
-            }
-            const db = client.db('library-manage-system')
-                .collection('category')
-                .deleteOne({ "_id": ObjectId(id) });
-            client.close();
-            res.send(db);
-        }
+router.delete('/:id', function (req, res, next) {
+    mongoose.connect(
+        'mongodb://localhost/library-manage-system',
+        { useNewUrlParser: true }
     );
+    mongoose.connection.on('error', () => {
+        console.error('连接数据库出错');
+        res.send({
+            msg: '连接数据库出错'
+        });
+    })
+    const id = req.params.id;
+    CategoryModel.findByIdAndDelete(id, () => {
+        res.send({ id: id });
+        mongoose.disconnect();
+    });
 });
 
 router.put('/:id', function (req, res, next) {
-    mongodb.MongoClient.connect(
-        'mongodb://localhost',
-        { useNewUrlParser: true },
-        async (err, client) => {
-            const id = req.params.id;
-            const book = req.body;
-            if (err) {
-                console.error(err);
-                return;
-            }
-            const db = client.db('library-manage-system')
-                .collection('category')
-                .updateOne(
-                    { "_id": ObjectId(id) },
-                    {
-                        $set: {
-                            name: book.name,
-                            author: book.author,
-                            desc: book.desc
-                        }
-                    }
-                );
-            client.close();
-            res.send('success');
-        }
+    mongoose.connect(
+        'mongodb://localhost/library-manage-system',
+        { useNewUrlParser: true }
     );
+    mongoose.connection.on('error', () => {
+        console.error('连接数据库出错');
+        res.send({
+            msg: '连接数据库出错'
+        });
+    })
+    const id = req.params.id;
+    const model = Object.assign({}, req.body);
+    CategoryModel.findByIdAndUpdate(id, { $set: model }, (err, doc) => {
+        if (err) {
+            res.send(err);
+        }
+        res.send(doc);
+        mongoose.disconnect();
+    });
 });
 
 module.exports = router;

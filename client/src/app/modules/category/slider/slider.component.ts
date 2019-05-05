@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-
-import { DataService, CategoryModel } from '../services/data.service';
-import { ListService } from './list.service';
+import { CategoryModel, DataService } from '../services/data.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { SliderService } from './slider.service';
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  selector: 'app-slider',
+  templateUrl: './slider.component.html',
+  styleUrls: ['./slider.component.scss']
 })
-export class ListComponent implements OnInit {
+export class SliderComponent implements OnInit {
+
   categories$: Observable<CategoryModel[]>;
   constructor(
-    private dataSvc: DataService,
-    public listSvc: ListService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dataSvc: DataService,
+    private sliderSvc: SliderService
   ) { }
 
   ngOnInit() {
@@ -24,42 +24,42 @@ export class ListComponent implements OnInit {
     this.dataSvc.pullCategories$();
   }
 
+
   public itemClick(category: CategoryModel) {
-    if (this.listSvc.category && this.listSvc.category._id === category._id) {
-      this.listSvc.category = null;
+    if (this.sliderSvc.category && this.sliderSvc.category._id === category._id) {
+      this.sliderSvc.category = null;
       return;
     }
-    this.listSvc.category = category;
+    this.sliderSvc.category = category;
   }
 
   public add() {
-    if (!this.listSvc.category) {
+    if (!this.sliderSvc.category) {
       this.router.navigate(['add'], { relativeTo: this.route });
       return;
     }
     this.router.navigate(
-      ['add', { id: this.listSvc.category._id }],
+      ['add', { id: this.sliderSvc.category._id }],
       { relativeTo: this.route }
     );
   }
 
   public async delete() {
-    if (!this.listSvc.category) {
+    if (!this.sliderSvc.category) {
       alert('请选择要删除的分类');
     }
-    const id = this.listSvc.category._id;
+    const id = this.sliderSvc.category._id;
     try {
       await this.dataSvc.delete(id);
-      this.listSvc.category = null;
+      this.sliderSvc.category = null;
       this.dataSvc.pullCategories$();
     } catch (error) {
       console.error(error);
-      console.log('删除失败');
     }
   }
 
   public edit() {
-    const category = this.listSvc.category;
+    const category = this.sliderSvc.category;
     if (!category) {
       alert('请选择要修改的分类');
       return;
@@ -76,3 +76,4 @@ export class ListComponent implements OnInit {
 
 
 }
+

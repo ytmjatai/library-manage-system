@@ -1,35 +1,30 @@
 <div class="card">
-  <div class="card-header">
-    <div class="btn-group" role="group" aria-label="Basic example">
-      <a routerLink="../add" class="btn btn-outline-success"><i class="fas fa-plus"></i> 新增</a>
-      <a routerLink="../add" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i> 删除</a>
-    </div>
-  </div>
+  <!-- <div class="card-header">
+    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
 
+    </div>
+  </div> -->
   <div class="card-body">
-    <table class="table table-bordered table-hover">
-      <thead>
-        <tr>
-          <th scope="col">书籍名称</th>
-          <th scope="col">作者</th>
-          <th scope="col">描述</th>
-          <th scope="col">操作</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let c of categories">
-          <td>{{c.name}}</td>
-          <td>{{c.name}}</td>
-          <td>{{c.tags}}</td>
-          <td>
-            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-              <button type="button" class="btn btn-sm btn-outline-primary" (click)="edit(c._id)"><i class="fas fa-edit"></i></button>
-              <button type="button" class="btn btn-sm btn-outline-danger" (click)="delete(c._id)"><i class="fas fa-trash-alt"></i></button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
+    <table class="table table-sm table-hover table-bordered">
+      <tr>
+        <th>名称</th>
+        <th>标签</th>
+        <th>code</th>
+        <th>操作</th>
+      </tr>
+      <tr *ngFor="let c of categories$ | async">
+        <td>{{c.name}}</td>
+        <td>{{c.tags}}</td>
+        <td>{{c.code}}</td>
+        <td>
+          <div class="btn-group btn-group-sm">
+            <button class="btn btn-outline-success">添加</button>
+            <button class="btn btn-outline-warning mx-1">编辑</button>
+            <button class="btn btn-outline-danger">删除</button>
+          </div>
+        </td>
+      </tr>
     </table>
   </div>
-  <div class="card-footer"></div>
+  <!-- <div class="card-footer"></div> -->
 </div>
