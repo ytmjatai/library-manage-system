@@ -11,7 +11,10 @@ router.get('/', function (req, res, next) {
             console.error(err);
             return;
         } else {
-            const db = await client.db('library-manage-system').collection('book').find({}).toArray();
+            const db = await client.db('library-manage-system')
+                .collection('book')
+                .find()
+                .toArray();
             client.close();
             res.send(db);
         }
@@ -67,16 +70,18 @@ router.put('/:id', function (req, res, next) {
         const id = req.params.id;
         const book = req.body;
         console.log(book);
-        
+
         if (err) {
             console.error(err);
             return;
         } else {
-            const db = client.db('library-manage-system').collection('book').updateOne({ "_id": ObjectId(id) }, { $set: {
-                name: book.name,
-                author: book.author,
-                desc: book.desc
-            } });
+            const db = client.db('library-manage-system').collection('book').updateOne({ "_id": ObjectId(id) }, {
+                $set: {
+                    name: book.name,
+                    author: book.author,
+                    desc: book.desc
+                }
+            });
             client.close();
             res.send('success');
         }

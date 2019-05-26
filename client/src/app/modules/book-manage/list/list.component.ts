@@ -10,7 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class ListComponent implements OnInit {
   books: BookModel[] = [];
   constructor(
-    private bookSvc: BookManageService,
+    public bookSvc: BookManageService,
     private router: Router,
     private route: ActivatedRoute
   ) { }

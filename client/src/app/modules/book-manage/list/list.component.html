@@ -1,6 +1,9 @@
 <div class="card">
-  <div class="card-header">
-    <div class="btn-group" role="group" aria-label="Basic example">
+  <div class="card-header d-flex align-items-center">
+    <form class="form-inline">
+      <input type="text" class="form-control" placeholder="请输入搜索关键词" name="keyword" [(ngModel)]="bookSvc.keyword">
+    </form>
+    <div class="btn-group ml-auto" role="group" aria-label="Basic example">
       <a routerLink="add" class="btn btn-outline-success"><i class="fas fa-plus"></i> 新增</a>
       <a routerLink="add" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i> 删除</a>
     </div>

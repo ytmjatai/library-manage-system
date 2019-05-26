@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class BookManageService {
-
+  keyword: string;
   constructor(
     private http: HttpClient
   ) { }
